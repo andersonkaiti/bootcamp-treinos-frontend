@@ -1,0 +1,94 @@
+'use client'
+
+import { env } from '@config/env'
+import { authClient } from '@lib/auth-client'
+import Image from 'next/image'
+import { redirect } from 'next/navigation'
+
+export default function LoginPage() {
+  const { data, isPending } = authClient.useSession()
+
+  if (isPending) {
+    return null
+  }
+
+  if (data?.session) {
+    redirect('/')
+  }
+
+  async function handleGoogleLogin() {
+    const { error } = await authClient.signIn.social({
+      provider: 'google',
+      callbackURL: env.NEXT_PUBLIC_BASE_URL,
+    })
+
+    if (error) {
+      console.log(error)
+    }
+  }
+
+  return (
+    <main className="relative flex min-h-screen w-full flex-col bg-black">
+      {/* Background Image */}
+      <Image
+        src="/images/login-bg.png"
+        alt="Login Background"
+        fill
+        className="object-contain"
+      />
+
+      {/* Logo */}
+      <div className="relative z-10 flex justify-center pt-12">
+        <Image
+          src="/icons/fit-ai-logo.svg"
+          alt="Fit.AI"
+          width={85}
+          height={38}
+        />
+      </div>
+
+      {/* Bottom Card */}
+      <div className="bg-primary relative z-10 mt-auto flex flex-col items-center rounded-t-[20px] px-5 pt-12 pb-10">
+        <div className="flex flex-col items-center gap-6">
+          {/* Title and Description */}
+          <div className="flex flex-col items-center gap-3">
+            <h1
+              className="text-center text-[32px] leading-[105%] font-semibold text-white"
+              style={{ fontFamily: 'var(--font-inter-tight)' }}
+            >
+              O app que vai transformar a forma como você treina.
+            </h1>
+          </div>
+
+          {/* Google Login Button */}
+          <button
+            onClick={handleGoogleLogin}
+            className="flex h-[38px] cursor-pointer items-center justify-center gap-2 rounded-full bg-white px-6 py-3 transition-opacity hover:opacity-90"
+          >
+            <Image
+              src="/icons/google-icon.svg"
+              alt="Google"
+              width={24}
+              height={24}
+            />
+
+            <span
+              className="text-sm font-semibold text-black"
+              style={{ fontFamily: 'var(--font-inter)' }}
+            >
+              Fazer login com Google
+            </span>
+          </button>
+        </div>
+
+        {/* Terms Text */}
+        <p
+          className="mt-[60px] text-center text-xs leading-[140%] text-white/70"
+          style={{ fontFamily: 'var(--font-inter-tight)' }}
+        >
+          ©2026 Copyright FIT.AI. Todos os direitos reservados
+        </p>
+      </div>
+    </main>
+  )
+}

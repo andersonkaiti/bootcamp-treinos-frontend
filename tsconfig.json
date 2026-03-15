@@ -19,7 +19,9 @@
       }
     ],
     "paths": {
+      "@components/*": ["./src/components/*"],
       "@config/*": ["./src/config/*"],
+      "@lib/*": ["./src/lib/*"],
       "@/*": ["./src/*"]
     }
   },
