@@ -1,38 +1,50 @@
-'use client'
-
-import { Button } from '@components/ui/button'
+import { BottomNavbar } from '@components/bottom-navbar'
+import { getHomeData } from '@http/api-client-generated'
 import { authClient } from '@lib/auth-client'
+import dayjs from 'dayjs'
+import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-export default function HomePage() {
-  const { data: session, isPending } = authClient.useSession()
+import { ConsistencySection } from './_components/consistency-section'
+import { HomeHeader } from './_components/home-header'
+import { TodayWorkoutSection } from './_components/today-workout-section'
 
-  if (isPending) {
-    return null
-  }
+function getTodayIndex(): number {
+  const day = new Date().getDay()
 
-  if (!session) {
+  return day === 0 ? 6 : day - 1
+}
+
+export default async function Home() {
+  const session = await authClient.getSession({
+    fetchOptions: {
+      headers: await headers(),
+    },
+  })
+
+  if (!session?.data?.session) {
     redirect('/login')
   }
 
-  async function handleLogout() {
-    await authClient.signOut()
+  const date = dayjs().format('YYYY-MM-DD')
 
-    redirect('/login')
-  }
+  const data = await getHomeData(date)
+
+  const todayIndex = getTodayIndex()
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-black p-8 text-white">
-      <h1 className="text-center text-2xl font-bold">
-        Boas-vindas, {session?.user?.name || 'Usuário'}!
-      </h1>
-      <p className="mt-2 text-center text-white/70">
-        Você está logado no Fit.ai
-      </p>
+    <main className="flex min-h-screen flex-col bg-white pb-24">
+      <HomeHeader userName={session.data.user.name} />
 
-      <Button onClick={handleLogout} className="p-4">
-        Sair
-      </Button>
+      <ConsistencySection
+        consistencyByDay={data.consistencyByDay}
+        workoutStreak={data.workoutStreak}
+        todayIndex={todayIndex}
+      />
+
+      <TodayWorkoutSection todayWorkoutDay={data.todayWorkoutDay} />
+
+      <BottomNavbar />
     </main>
   )
 }
