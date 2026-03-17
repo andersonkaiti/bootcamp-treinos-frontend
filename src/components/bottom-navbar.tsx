@@ -11,21 +11,33 @@ import {
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-const navItems = [
-  { icon: House, href: '/', label: 'Home' },
-  { icon: Calendar, href: '#', label: 'Calendário' },
-  { icon: Sparkles, href: '#', label: 'IA', isMain: true },
-  { icon: ChartNoAxesColumn, href: '#', label: 'Estatísticas' },
-  { icon: User, href: '#', label: 'Perfil' },
-]
+interface BottomNavbarProps {
+  todayWorkoutHref?: string
+}
 
-export function BottomNavbar() {
+export function BottomNavbar({ todayWorkoutHref }: BottomNavbarProps) {
   const pathname = usePathname()
+
+  const navItems = [
+    { icon: House, href: '/', label: 'Home' },
+    { icon: Calendar, href: todayWorkoutHref || '#', label: 'Calendário' },
+    { icon: Sparkles, href: '#', label: 'IA', isMain: true },
+    { icon: ChartNoAxesColumn, href: '#', label: 'Estatísticas' },
+    { icon: User, href: '#', label: 'Perfil' },
+  ]
+
+  const isWorkoutDayPage =
+    pathname.includes('/workout-plans/') && pathname.includes('/day/')
 
   return (
     <nav className="fixed right-0 bottom-0 left-0 z-50 flex items-center justify-center gap-4 rounded-t-[20px] border-t border-gray-200 bg-white px-6 py-4">
       {navItems.map((item) => {
-        const isActive = pathname === item.href
+        const isActive =
+          item.href === '/'
+            ? pathname === '/'
+            : item.label === 'Calendário'
+              ? isWorkoutDayPage
+              : pathname === item.href
         const Icon = item.icon
 
         if (item.isMain) {

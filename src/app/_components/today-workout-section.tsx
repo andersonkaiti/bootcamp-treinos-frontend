@@ -1,7 +1,6 @@
+import { WorkoutDayCard } from '@components/workout-day-card'
 import type { GetHomeData200TodayWorkoutDay } from '@http/api-client-generated'
 import Link from 'next/link'
-
-import { WorkoutDayCard } from './workout-day-card'
 
 interface TodayWorkoutSectionProps {
   todayWorkoutDay: GetHomeData200TodayWorkoutDay
@@ -22,7 +21,10 @@ export function TodayWorkoutSection({
       </div>
 
       {todayWorkoutDay ? (
-        <Link href="#" className="flex size-full grow">
+        <Link
+          href={`/workout-plans/${todayWorkoutDay.workoutPlanId}/day/${todayWorkoutDay.id}`}
+          className="flex size-full grow"
+        >
           <WorkoutDayCard workout={todayWorkoutDay} />
         </Link>
       ) : (

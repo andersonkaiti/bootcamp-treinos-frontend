@@ -1,6 +1,9 @@
 import 'dayjs/locale/pt-br'
 
-import type { GetHomeData200TodayWorkoutDay } from '@http/api-client-generated'
+import type {
+  GetHomeData200TodayWorkoutDay,
+  GetWorkoutDay200,
+} from '@http/api-client-generated'
 import dayjs from 'dayjs'
 import { Calendar, Clock, Dumbbell } from 'lucide-react'
 import Image from 'next/image'
@@ -8,12 +11,12 @@ import Image from 'next/image'
 dayjs.locale('pt-br')
 
 interface WorkoutDayCardProps {
-  workout: NonNullable<GetHomeData200TodayWorkoutDay>
+  workout: NonNullable<GetHomeData200TodayWorkoutDay | GetWorkoutDay200>
 }
 
 export function WorkoutDayCard({ workout }: WorkoutDayCardProps) {
   return (
-    <div className="relative w-full flex-1 overflow-hidden rounded-xl">
+    <div className="relative h-50 w-full shrink-0 overflow-hidden rounded-xl sm:h-80">
       <Image
         src={workout.coverImageUrl || '/images/workout-placeholder.jpg'}
         alt={workout.name}
