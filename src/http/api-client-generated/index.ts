@@ -142,22 +142,30 @@ export const ListWorkoutPlans200ItemWorkoutDaysItemWeekDay = {
 export type ListWorkoutPlans200ItemWorkoutDaysItemExercisesItem = {
   /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$ */
   id: string
+  /** @minLength 1 */
   name: string
+  /** @minimum 0 */
   order: number
+  /** @minimum 1 */
   sets: number
+  /** @minimum 1 */
   reps: number
+  /** @minimum 1 */
   restTimeInSeconds: number
+  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$ */
+  workoutDayId: string
 }
 
 export type ListWorkoutPlans200ItemWorkoutDaysItem = {
   /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$ */
   id: string
   name: string
+  weekDay: ListWorkoutPlans200ItemWorkoutDaysItemWeekDay
   isRest: boolean
+  estimatedDurationInSeconds: number
   /** @nullable */
   coverImageUrl?: string | null
-  estimatedDurationInSeconds: number
-  weekDay: ListWorkoutPlans200ItemWorkoutDaysItemWeekDay
+  exercisesCount: number
   exercises: ListWorkoutPlans200ItemWorkoutDaysItemExercisesItem[]
 }
 
@@ -200,12 +208,12 @@ export const GetWorkoutPlan200WorkoutDaysItemWeekDay = {
 export type GetWorkoutPlan200WorkoutDaysItem = {
   /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$ */
   id: string
-  weekDay: GetWorkoutPlan200WorkoutDaysItemWeekDay
   name: string
+  weekDay: GetWorkoutPlan200WorkoutDaysItemWeekDay
   isRest: boolean
+  estimatedDurationInSeconds: number
   /** @nullable */
   coverImageUrl?: string | null
-  estimatedDurationInSeconds: number
   exercisesCount: number
 }
 
@@ -241,18 +249,6 @@ export type GetWorkoutPlan500 = {
   code: string
 }
 
-export type GetWorkoutDay200ExercisesItem = {
-  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$ */
-  id: string
-  name: string
-  order: number
-  sets: number
-  reps: number
-  restTimeInSeconds: number
-  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$ */
-  workoutDayId: string
-}
-
 export type GetWorkoutDay200WeekDay =
   (typeof GetWorkoutDay200WeekDay)[keyof typeof GetWorkoutDay200WeekDay]
 
@@ -265,6 +261,23 @@ export const GetWorkoutDay200WeekDay = {
   SATURDAY: 'SATURDAY',
   SUNDAY: 'SUNDAY',
 } as const
+
+export type GetWorkoutDay200ExercisesItem = {
+  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$ */
+  id: string
+  /** @minLength 1 */
+  name: string
+  /** @minimum 0 */
+  order: number
+  /** @minimum 1 */
+  sets: number
+  /** @minimum 1 */
+  reps: number
+  /** @minimum 1 */
+  restTimeInSeconds: number
+  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$ */
+  workoutDayId: string
+}
 
 export type GetWorkoutDay200SessionsItem = {
   /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$ */
@@ -281,12 +294,13 @@ export type GetWorkoutDay200 = {
   /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$ */
   id: string
   name: string
+  weekDay: GetWorkoutDay200WeekDay
   isRest: boolean
+  estimatedDurationInSeconds: number
   /** @nullable */
   coverImageUrl?: string | null
-  estimatedDurationInSeconds: number
+  exercisesCount: number
   exercises: GetWorkoutDay200ExercisesItem[]
-  weekDay: GetWorkoutDay200WeekDay
   sessions: GetWorkoutDay200SessionsItem[]
 }
 
@@ -381,11 +395,8 @@ export type CompleteWorkoutSession500 = {
  */
 export type GetHomeData200TodayWorkoutDay = {
   /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$ */
-  workoutPlanId: string
-  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$ */
   id: string
   name: string
-  isRest: boolean
   weekDay:
     | 'MONDAY'
     | 'TUESDAY'
@@ -394,10 +405,13 @@ export type GetHomeData200TodayWorkoutDay = {
     | 'FRIDAY'
     | 'SATURDAY'
     | 'SUNDAY'
+  isRest: boolean
   estimatedDurationInSeconds: number
   /** @nullable */
   coverImageUrl?: string | null
   exercisesCount: number
+  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$ */
+  workoutPlanId: string
 } | null
 
 export type GetHomeData200ConsistencyByDay = {
@@ -596,7 +610,7 @@ export const completeWorkoutSession = (
 /**
  * @summary Get house dashboard data
  */
-export const getHomeData = (date: string) => {
+export const getHomeData = (date: unknown) => {
   return api<GetHomeData200>({ url: `/home/${date}`, method: 'GET' })
 }
 
