@@ -56,9 +56,7 @@ export default async function WorkoutDayPage({ params }: WorkoutDayPageProps) {
         />
       </section>
 
-      <BottomNavbar
-        todayWorkoutHref={`/workout-plans/${workoutPlanId}/day/${dayId}`}
-      />
+      <BottomNavbar />
     </main>
   )
 }
