@@ -15,7 +15,7 @@ export async function BottomNavbar() {
   const navItems = [
     { icon: 'House', href: '/', label: 'Home' },
     { icon: 'Calendar', href: workoutPlanHref, label: 'Calendário' },
-    { icon: 'ChartNoAxesColumn', href: '#', label: 'Estatísticas' },
+    { icon: 'ChartNoAxesColumn', href: '/stats', label: 'Estatísticas' },
     { icon: 'User', href: '#', label: 'Perfil' },
   ] as const
 
