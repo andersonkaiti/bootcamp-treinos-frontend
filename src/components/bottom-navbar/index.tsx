@@ -16,7 +16,7 @@ export async function BottomNavbar() {
     { icon: 'House', href: '/', label: 'Home' },
     { icon: 'Calendar', href: workoutPlanHref, label: 'Calendário' },
     { icon: 'ChartNoAxesColumn', href: '/stats', label: 'Estatísticas' },
-    { icon: 'User', href: '#', label: 'Perfil' },
+    { icon: 'User', href: '/profile', label: 'Perfil' },
   ] as const
 
   return (
