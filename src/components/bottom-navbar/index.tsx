@@ -1,7 +1,7 @@
 import { getHomeData } from '@http/api-client-generated'
 import dayjs from 'dayjs'
-import { Sparkles } from 'lucide-react'
 
+import { ChatbotButton } from './chatbot-button'
 import { NavItem } from './nav-item'
 
 export async function BottomNavbar() {
@@ -25,9 +25,7 @@ export async function BottomNavbar() {
         <NavItem key={item.label} {...item} />
       ))}
 
-      <button className="bg-primary flex size-14 items-center justify-center rounded-full">
-        <Sparkles className="size-6 text-white" strokeWidth={2} />
-      </button>
+      <ChatbotButton />
 
       {navItems.slice(2).map((item) => (
         <NavItem key={item.label} {...item} />

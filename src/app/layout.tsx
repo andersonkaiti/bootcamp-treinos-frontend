@@ -1,7 +1,9 @@
 import './globals.css'
 
+import { Chatbot } from '@components/chat/chatbot'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { NuqsAdapter } from 'nuqs/adapters/next'
 
 const inter = Inter({
   variable: '--font-inter',
@@ -20,7 +22,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${inter.className} antialiased`}>{children}</body>
+      <body className={`${inter.className} antialiased`}>
+        <NuqsAdapter>
+          {children}
+
+          <Chatbot />
+        </NuqsAdapter>
+      </body>
     </html>
   )
 }
