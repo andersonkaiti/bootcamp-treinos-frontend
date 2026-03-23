@@ -2,7 +2,7 @@
 
 import 'streamdown/styles.css'
 
-import { cn } from '@lib/utils'
+import { cn } from '@lib/cn'
 import { UIMessage } from 'ai'
 import { RefObject } from 'react'
 import { Streamdown } from 'streamdown'
