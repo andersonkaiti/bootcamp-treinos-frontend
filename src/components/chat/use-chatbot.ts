@@ -4,7 +4,7 @@ import { useChat } from '@ai-sdk/react'
 import { env } from '@config/env'
 import { DefaultChatTransport } from 'ai'
 import { parseAsBoolean, parseAsString, useQueryStates } from 'nuqs'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 
 export const SUGGESTED_MESSAGES = [
   'Monte meu plano de treino',
@@ -29,10 +29,8 @@ export function useChatbot() {
 
   const { messages, sendMessage, status } = useChat({ transport })
 
-  const [input, setInput] = useState('')
   const initialMessageSent = useRef(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const isOpen = params.chat_open
   const initialMessage = params.chat_initial_message
@@ -63,12 +61,6 @@ export function useChatbot() {
   }, [messages, status])
 
   useEffect(() => {
-    if (isOpen) {
-      setTimeout(() => textareaRef.current?.focus(), 300)
-    }
-  }, [isOpen])
-
-  useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
     return () => {
       document.body.style.overflow = ''
@@ -89,48 +81,23 @@ export function useChatbot() {
     }
   }, [isOpen, handleClose])
 
-  function handleSend() {
-    const text = input.trim()
-    if (!text || isLoading) {
-      return
-    }
+  function handleSend(text: string) {
+    if (!text.trim() || isLoading) return
     sendMessage({ text })
-    setInput('')
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto'
-    }
   }
 
   function handleSuggest(text: string) {
     sendMessage({ text })
   }
 
-  function handleTextareaChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
-    setInput(event.target.value)
-    const element = event.target
-    element.style.height = 'auto'
-    element.style.height = `${Math.min(element.scrollHeight, 120)}px`
-  }
-
-  function handleKeyDown(event: React.KeyboardEvent<HTMLTextAreaElement>) {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault()
-      handleSend()
-    }
-  }
-
   return {
     messages,
-    input,
     isOpen,
     isLoading,
     showSuggestions,
-    textareaRef,
     messagesEndRef,
     handleClose,
     handleSend,
     handleSuggest,
-    handleTextareaChange,
-    handleKeyDown,
   }
 }

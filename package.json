@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ai-sdk/react": "^3.0.136",
+    "@hookform/resolvers": "^5.2.2",
     "ai": "^6.0.134",
     "better-auth": "^1.5.5",
     "class-variance-authority": "^0.7.1",
@@ -24,6 +25,7 @@
     "radix-ui": "^1.4.3",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-hook-form": "^7.72.0",
     "shadcn": "^4.0.7",
     "streamdown": "^2.5.0",
     "tailwind-merge": "^3.5.0",

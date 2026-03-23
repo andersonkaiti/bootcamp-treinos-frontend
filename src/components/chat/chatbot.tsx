@@ -8,17 +8,13 @@ import { useChatbot } from './use-chatbot'
 export function Chatbot() {
   const {
     messages,
-    input,
     isOpen,
     isLoading,
     showSuggestions,
-    textareaRef,
     messagesEndRef,
     handleClose,
     handleSend,
     handleSuggest,
-    handleTextareaChange,
-    handleKeyDown,
   } = useChatbot()
 
   if (!isOpen) {
@@ -44,12 +40,9 @@ export function Chatbot() {
           />
 
           <ChatbotInput
-            input={input}
+            isOpen={isOpen}
             isLoading={isLoading}
             showSuggestions={showSuggestions}
-            textareaRef={textareaRef}
-            onChange={handleTextareaChange}
-            onKeyDown={handleKeyDown}
             onSend={handleSend}
             onSuggest={handleSuggest}
           />
