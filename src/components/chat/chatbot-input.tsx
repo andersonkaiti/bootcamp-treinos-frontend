@@ -22,6 +22,7 @@ interface ChatbotInputProps {
   showSuggestions: boolean
   onSend: (text: string) => void
   onSuggest: (text: string) => void
+  suggestedMessages?: string[]
 }
 
 export function ChatbotInput({
@@ -30,6 +31,7 @@ export function ChatbotInput({
   showSuggestions,
   onSend,
   onSuggest,
+  suggestedMessages,
 }: ChatbotInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -70,7 +72,7 @@ export function ChatbotInput({
     <div className="flex shrink-0 flex-col gap-3">
       {showSuggestions && (
         <div className="flex gap-[10px] overflow-x-auto px-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {SUGGESTED_MESSAGES.map((msg) => (
+          {(suggestedMessages || SUGGESTED_MESSAGES).map((msg) => (
             <button
               key={msg}
               onClick={() => onSuggest(msg)}

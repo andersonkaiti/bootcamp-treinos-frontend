@@ -1,5 +1,6 @@
 import { BottomNavbar } from '@components/bottom-navbar'
 import { withAuth } from '@components/with-auth'
+import { withOnboarding } from '@components/with-onboarding'
 import { getStats } from '@http/api-client-generated'
 import Image from 'next/image'
 
@@ -65,4 +66,4 @@ async function EvolucaoPage() {
   )
 }
 
-export default withAuth(EvolucaoPage)
+export default withAuth(withOnboarding(EvolucaoPage))

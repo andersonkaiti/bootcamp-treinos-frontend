@@ -1,5 +1,6 @@
 import { BottomNavbar } from '@components/bottom-navbar'
 import { withAuth } from '@components/with-auth'
+import { withOnboarding } from '@components/with-onboarding'
 import { getUserTrainData } from '@http/api-client-generated'
 import Image from 'next/image'
 
@@ -37,4 +38,4 @@ async function PerfilPage() {
   )
 }
 
-export default withAuth(PerfilPage)
+export default withAuth(withOnboarding(PerfilPage))

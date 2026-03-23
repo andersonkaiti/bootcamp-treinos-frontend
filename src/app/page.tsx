@@ -1,4 +1,5 @@
 import { BottomNavbar } from '@components/bottom-navbar'
+import { withOnboarding } from '@components/with-onboarding'
 import { getHomeData } from '@http/api-client-generated'
 import { authClient } from '@lib/auth-client'
 import dayjs from 'dayjs'
@@ -15,7 +16,7 @@ function getTodayIndex(): number {
   return day === 0 ? 6 : day - 1
 }
 
-export default async function Home() {
+async function Home() {
   const session = await authClient.getSession({
     fetchOptions: {
       headers: await headers(),
@@ -48,3 +49,5 @@ export default async function Home() {
     </main>
   )
 }
+
+export default withOnboarding(Home)
