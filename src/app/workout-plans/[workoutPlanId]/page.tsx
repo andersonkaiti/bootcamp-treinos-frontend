@@ -1,4 +1,5 @@
 import { BottomNavbar } from '@components/bottom-navbar'
+import { withAuth } from '@components/with-auth'
 import { WorkoutDayCard } from '@components/workout-day-card'
 import { getWorkoutPlan } from '@http/api-client-generated'
 import { Goal } from 'lucide-react'
@@ -11,9 +12,7 @@ interface WorkoutPlanPageProps {
   params: Promise<{ workoutPlanId: string }>
 }
 
-export default async function WorkoutPlanPage({
-  params,
-}: WorkoutPlanPageProps) {
+async function WorkoutPlanPage({ params }: WorkoutPlanPageProps) {
   const { workoutPlanId } = await params
   const workoutPlan = await getWorkoutPlan(workoutPlanId)
 
@@ -73,3 +72,5 @@ export default async function WorkoutPlanPage({
     </main>
   )
 }
+
+export default withAuth(WorkoutPlanPage)

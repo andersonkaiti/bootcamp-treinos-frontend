@@ -1,4 +1,5 @@
 import { BottomNavbar } from '@components/bottom-navbar'
+import { withAuth } from '@components/with-auth'
 import { WorkoutDayCard } from '@components/workout-day-card'
 import { getWorkoutDay } from '@http/api-client-generated'
 
@@ -14,7 +15,7 @@ interface WorkoutDayPageProps {
   }>
 }
 
-export default async function WorkoutDayPage({ params }: WorkoutDayPageProps) {
+async function WorkoutDayPage({ params }: WorkoutDayPageProps) {
   const { workoutPlanId, dayId } = await params
   const workoutDay = await getWorkoutDay(workoutPlanId, dayId)
 
@@ -60,3 +61,5 @@ export default async function WorkoutDayPage({ params }: WorkoutDayPageProps) {
     </main>
   )
 }
+
+export default withAuth(WorkoutDayPage)

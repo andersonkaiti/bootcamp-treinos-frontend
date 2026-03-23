@@ -1,6 +1,7 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@components/ui/button'
+import { toast } from 'sonner'
 
 interface WorkoutActionsProps {
   sessionStatus: 'none' | 'in_progress' | 'completed'
@@ -13,6 +14,24 @@ export function WorkoutActions({
   onStartWorkout,
   onCompleteWorkout,
 }: WorkoutActionsProps) {
+  async function handleStart() {
+    try {
+      await onStartWorkout()
+      toast.success('Treino iniciado!')
+    } catch {
+      toast.error('Erro ao iniciar treino. Tente novamente.')
+    }
+  }
+
+  async function handleComplete() {
+    try {
+      await onCompleteWorkout()
+      toast.success('Treino concluído!')
+    } catch {
+      toast.error('Erro ao concluir treino. Tente novamente.')
+    }
+  }
+
   if (sessionStatus === 'completed') {
     return (
       <div className="flex items-center justify-center rounded-xl bg-[#F1F1F1] px-5 py-4">
@@ -25,7 +44,7 @@ export function WorkoutActions({
 
   if (sessionStatus === 'in_progress') {
     return (
-      <form action={onCompleteWorkout} className="w-full">
+      <form action={handleComplete} className="w-full">
         <Button
           type="submit"
           className="font-display w-full rounded-xl py-6 text-sm font-semibold"
@@ -37,7 +56,7 @@ export function WorkoutActions({
   }
 
   return (
-    <form action={onStartWorkout} className="w-full">
+    <form action={handleStart} className="w-full">
       <Button
         type="submit"
         className="font-display w-full rounded-xl py-6 text-sm font-semibold"

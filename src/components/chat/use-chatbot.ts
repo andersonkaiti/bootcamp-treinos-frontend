@@ -5,6 +5,7 @@ import { env } from '@config/env'
 import { DefaultChatTransport } from 'ai'
 import { parseAsBoolean, parseAsString, useQueryStates } from 'nuqs'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { toast } from 'sonner'
 
 export const SUGGESTED_MESSAGES = [
   'Monte meu plano de treino',
@@ -27,7 +28,12 @@ export function useChatbot() {
     []
   )
 
-  const { messages, sendMessage, status } = useChat({ transport })
+  const { messages, sendMessage, status } = useChat({
+    transport,
+    onError: () => {
+      toast.error('Erro ao enviar mensagem. Tente novamente.')
+    },
+  })
 
   const initialMessageSent = useRef(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)

@@ -1,4 +1,5 @@
 import { BottomNavbar } from '@components/bottom-navbar'
+import { withAuth } from '@components/with-auth'
 import { getUserTrainData } from '@http/api-client-generated'
 import Image from 'next/image'
 
@@ -6,7 +7,7 @@ import { BodyStatsGrid } from './_components/body-stats-grid'
 import { ProfileHeader } from './_components/profile-header'
 import { SignOutButton } from './_components/sign-out-button'
 
-export default async function PerfilPage() {
+async function PerfilPage() {
   const trainData = await getUserTrainData()
 
   const name = trainData?.userName || 'Usuário'
@@ -35,3 +36,5 @@ export default async function PerfilPage() {
     </main>
   )
 }
+
+export default withAuth(PerfilPage)

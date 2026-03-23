@@ -1,6 +1,7 @@
 import './globals.css'
 
 import { Chatbot } from '@components/chat/chatbot'
+import { Toaster } from '@components/ui/sonner'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { NuqsAdapter } from 'nuqs/adapters/next'
@@ -27,6 +28,8 @@ export default function RootLayout({
           {children}
 
           <Chatbot />
+
+          <Toaster />
         </NuqsAdapter>
       </body>
     </html>

@@ -1,4 +1,5 @@
 import { BottomNavbar } from '@components/bottom-navbar'
+import { withAuth } from '@components/with-auth'
 import { getStats } from '@http/api-client-generated'
 import Image from 'next/image'
 
@@ -13,7 +14,7 @@ function formatDate(date: Date): string {
   return `${year}-${month}-${day}`
 }
 
-export default async function EvolucaoPage() {
+async function EvolucaoPage() {
   const today = new Date()
 
   const startDay = new Date(today)
@@ -63,3 +64,5 @@ export default async function EvolucaoPage() {
     </main>
   )
 }
+
+export default withAuth(EvolucaoPage)
