@@ -1,10 +1,15 @@
 import './globals.css'
 
-import { Chatbot } from '@components/chat/chatbot'
 import { Toaster } from '@components/ui/sonner'
 import type { Metadata } from 'next'
+import dynamic from 'next/dynamic'
 import { Inter } from 'next/font/google'
 import { NuqsAdapter } from 'nuqs/adapters/next'
+import { Suspense } from 'react'
+
+const Chatbot = dynamic(() =>
+  import('@components/chat/chatbot').then((m) => m.Chatbot)
+)
 
 const inter = Inter({
   variable: '--font-inter',
@@ -24,13 +29,15 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={`${inter.className} antialiased`}>
-        <NuqsAdapter>
-          {children}
+        <Suspense>
+          <NuqsAdapter>
+            {children}
 
-          <Chatbot />
+            <Chatbot />
 
-          <Toaster />
-        </NuqsAdapter>
+            <Toaster />
+          </NuqsAdapter>
+        </Suspense>
       </body>
     </html>
   )
