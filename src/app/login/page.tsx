@@ -2,11 +2,15 @@
 
 import { env } from '@config/env'
 import { authClient } from '@lib/auth-client'
+import { Loader2 } from 'lucide-react'
 import Image from 'next/image'
 import { redirect } from 'next/navigation'
+import { useTransition } from 'react'
+import { toast } from 'sonner'
 
 export default function LoginPage() {
   const { data, isPending } = authClient.useSession()
+  const [isPendingTransition, startTransition] = useTransition()
 
   if (isPending) {
     return null
@@ -16,20 +20,21 @@ export default function LoginPage() {
     redirect('/')
   }
 
-  async function handleGoogleLogin() {
-    const { error } = await authClient.signIn.social({
-      provider: 'google',
-      callbackURL: env.NEXT_PUBLIC_BASE_URL,
-    })
+  function handleGoogleLogin() {
+    startTransition(async () => {
+      const { error } = await authClient.signIn.social({
+        provider: 'google',
+        callbackURL: env.NEXT_PUBLIC_BASE_URL,
+      })
 
-    if (error) {
-      console.log(error)
-    }
+      if (error) {
+        toast.error('Erro ao fazer login com Google')
+      }
+    })
   }
 
   return (
     <main className="relative flex min-h-screen w-full flex-col bg-black">
-      {/* Background Image */}
       <Image
         src="/images/login-bg.png"
         alt="Login Background"
@@ -37,7 +42,6 @@ export default function LoginPage() {
         className="object-contain"
       />
 
-      {/* Logo */}
       <div className="relative z-10 flex justify-center pt-12">
         <Image
           src="/icons/fit-ai-logo.svg"
@@ -47,10 +51,8 @@ export default function LoginPage() {
         />
       </div>
 
-      {/* Bottom Card */}
       <div className="bg-primary relative z-10 mt-auto flex flex-col items-center rounded-t-[20px] px-5 pt-12 pb-10">
         <div className="flex flex-col items-center gap-6">
-          {/* Title and Description */}
           <div className="flex flex-col items-center gap-3">
             <h1
               className="text-center text-[32px] leading-[105%] font-semibold text-white"
@@ -60,28 +62,31 @@ export default function LoginPage() {
             </h1>
           </div>
 
-          {/* Google Login Button */}
           <button
             onClick={handleGoogleLogin}
-            className="flex h-[38px] cursor-pointer items-center justify-center gap-2 rounded-full bg-white px-6 py-3 transition-opacity hover:opacity-90"
+            disabled={isPendingTransition}
+            className="flex h-[38px] cursor-pointer items-center justify-center gap-2 rounded-full bg-white px-6 py-3 transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            <Image
-              src="/icons/google-icon.svg"
-              alt="Google"
-              width={24}
-              height={24}
-            />
+            {isPendingTransition ? (
+              <Loader2 className="h-5 w-5 animate-spin text-black" />
+            ) : (
+              <Image
+                src="/icons/google-icon.svg"
+                alt="Google"
+                width={24}
+                height={24}
+              />
+            )}
 
             <span
               className="text-sm font-semibold text-black"
               style={{ fontFamily: 'var(--font-inter)' }}
             >
-              Fazer login com Google
+              {isPendingTransition ? 'Entrando...' : 'Fazer login com Google'}
             </span>
           </button>
         </div>
 
-        {/* Terms Text */}
         <p
           className="mt-[60px] text-center text-xs leading-[140%] text-white/70"
           style={{ fontFamily: 'var(--font-inter-tight)' }}

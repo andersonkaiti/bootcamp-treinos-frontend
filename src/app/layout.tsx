@@ -35,7 +35,7 @@ export default function RootLayout({
 
             <Chatbot />
 
-            <Toaster />
+            <Toaster richColors />
           </NuqsAdapter>
         </Suspense>
       </body>
