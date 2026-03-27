@@ -1,6 +1,8 @@
 import { checkOnboardingStatus } from '@utils/check-onboarding'
 import { redirect } from 'next/navigation'
 
+import { RedirectWithToast } from './redirect-with-toast'
+
 export function withOnboarding<T extends object>(
   Component: (props: T) => Promise<React.JSX.Element>
 ) {
@@ -8,7 +10,12 @@ export function withOnboarding<T extends object>(
     const hasCompletedOnboarding = await checkOnboardingStatus()
 
     if (!hasCompletedOnboarding) {
-      redirect('/onboarding')
+      return (
+        <RedirectWithToast
+          href="/onboarding"
+          message="Você precisa concluir o onboarding."
+        />
+      )
     }
 
     return Component(props)

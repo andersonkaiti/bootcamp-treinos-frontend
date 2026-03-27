@@ -1,20 +1,15 @@
-import { getCookie } from 'cookies-next'
-import { type cookies } from 'next/headers'
-
-const COOKIE_KEY = 'better-auth.session_token'
+import { getCookies } from 'cookies-next'
 
 export async function getSessionToken() {
-  let cookieStore: typeof cookies | undefined
+  const options =
+    typeof window === 'undefined'
+      ? { cookies: await import('next/headers').then((m) => m.cookies) }
+      : {}
 
-  if (typeof window === 'undefined') {
-    const { cookies: serverCookies } = await import('next/headers')
+  const allCookies = await getCookies(options)
 
-    cookieStore = serverCookies
-  }
-
-  const token = await getCookie(COOKIE_KEY, {
-    cookies: cookieStore,
-  })
-
-  return token
+  return (
+    allCookies?.['__Secure-better-auth.session_token'] ??
+    allCookies?.['better-auth.session_token']
+  )
 }

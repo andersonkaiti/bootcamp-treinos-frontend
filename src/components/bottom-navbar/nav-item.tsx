@@ -29,11 +29,22 @@ export function NavItem({ icon, href, label }: NavItemProps) {
         : pathname === href
 
   return (
-    <Link href={href} className="flex size-12 items-center justify-center">
-      <Icon
-        className={cn('size-6', isActive ? 'text-black' : 'text-gray-400')}
-        strokeWidth={2}
-      />
+    <Link
+      href={href}
+      className={cn(
+        'flex flex-col items-center justify-center gap-1 transition-all duration-200',
+        isActive ? 'scale-110 text-black' : 'text-gray-400 hover:text-black'
+      )}
+    >
+      <Icon className="size-6" strokeWidth={isActive ? 2.5 : 2} />
+      <span
+        className={cn(
+          'hidden text-[10px] font-medium transition-opacity md:block',
+          isActive ? 'opacity-100' : 'opacity-70'
+        )}
+      >
+        {label}
+      </span>
     </Link>
   )
 }
