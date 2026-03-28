@@ -1,6 +1,6 @@
 import { env } from '@config/env'
 import { getSessionToken } from '@lib/get-session-token'
-import ky from 'ky'
+import ky, { HTTPError } from 'ky'
 
 const client = ky.create({
   prefixUrl: env.NEXT_PUBLIC_API_URL,
@@ -29,9 +29,22 @@ export async function api<T>(config: ApiClientConfig): Promise<T> {
 
   const normalizedUrl = url.replace(/^\//, '')
 
-  return await client(normalizedUrl, {
-    ...options,
-    searchParams: params as Record<string, string | number | boolean>,
-    json: data,
-  }).json()
+  try {
+    return await client(normalizedUrl, {
+      ...options,
+      searchParams: params as Record<string, string | number | boolean>,
+      json: data,
+    }).json()
+  } catch (error) {
+    if (error instanceof HTTPError && error.response.status === 401) {
+      if (typeof window === 'undefined') {
+        const { redirect } = await import('next/navigation')
+        redirect('/login')
+      } else {
+        window.location.replace('/login')
+      }
+    }
+
+    throw error
+  }
 }
