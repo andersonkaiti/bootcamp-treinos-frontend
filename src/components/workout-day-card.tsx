@@ -14,7 +14,19 @@ interface WorkoutDayCardProps {
   workout: NonNullable<GetHomeData200TodayWorkoutDay | GetWorkoutDay200>
 }
 
+const DAY_TRANSLATIONS: Record<string, string> = {
+  MONDAY: 'Segunda',
+  TUESDAY: 'Terça',
+  WEDNESDAY: 'Quarta',
+  THURSDAY: 'Quinta',
+  FRIDAY: 'Sexta',
+  SATURDAY: 'Sábado',
+  SUNDAY: 'Domingo',
+}
+
 export function WorkoutDayCard({ workout }: WorkoutDayCardProps) {
+  const dayLabel = DAY_TRANSLATIONS[workout.weekDay] || workout.weekDay
+
   return (
     <div className="relative h-50 w-full shrink-0 overflow-hidden rounded-xl sm:h-80">
       <Image
@@ -29,7 +41,7 @@ export function WorkoutDayCard({ workout }: WorkoutDayCardProps) {
         <div className="flex items-center gap-1.5 self-start rounded-full bg-white/16 px-2.5 py-1.5 backdrop-blur-sm">
           <Calendar className="size-3.5 text-white" strokeWidth={1.75} />
           <span className="font-display text-xs font-semibold text-white uppercase">
-            {workout.weekDay}
+            {dayLabel}
           </span>
         </div>
 
