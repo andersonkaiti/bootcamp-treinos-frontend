@@ -17,8 +17,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Bootcamp Treinos',
-  description: 'Bootcamp Treinos',
+  title: 'TreinAI',
+  description: 'Site desenvolvido para auxiliar no treinamento de atletas.',
 }
 
 export default function RootLayout({
