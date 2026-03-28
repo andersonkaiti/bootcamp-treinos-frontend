@@ -1,5 +1,4 @@
 import { TreinaiLogo } from '@components/treinai-logo'
-import Image from 'next/image'
 
 interface PageHeaderProps {
   title?: string

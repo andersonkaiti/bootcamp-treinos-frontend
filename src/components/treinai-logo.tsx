@@ -1,4 +1,4 @@
-import { cn } from '@lib/utils'
+import { cn } from '@lib/cn'
 
 interface TreinaiLogoProps {
   width?: number
@@ -22,7 +22,6 @@ export function TreinaiLogo({
       style={{
         shapeRendering: 'geometricPrecision',
         textRendering: 'geometricPrecision',
-        imageRendering: 'optimizeQuality',
         fillRule: 'evenodd',
         clipRule: 'evenodd',
       }}
