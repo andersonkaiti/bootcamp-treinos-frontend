@@ -1,3 +1,4 @@
+import { TreinaiLogo } from '@components/treinai-logo'
 import Image from 'next/image'
 
 interface HomeHeaderProps {
@@ -17,7 +18,7 @@ export function HomeHeader({ userName }: HomeHeaderProps) {
       <div className="absolute inset-0 bg-linear-to-r from-black via-black/50 to-transparent" />
 
       <div className="absolute inset-0 flex flex-col justify-between p-5 pb-10">
-        <Image src="/icons/fit-ai-logo.svg" alt="Logo" width={60} height={60} />
+        <TreinaiLogo width={60} height={60} />
 
         <div className="flex items-end justify-between">
           <div className="flex flex-col gap-1.5">

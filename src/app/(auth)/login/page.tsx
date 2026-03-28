@@ -1,5 +1,6 @@
 'use client'
 
+import { TreinaiLogo } from '@components/treinai-logo'
 import { Loader } from '@components/ui/loader'
 import { env } from '@config/env'
 import { authClient } from '@lib/auth-client'
@@ -48,12 +49,7 @@ export default function LoginPage() {
       />
 
       <div className="relative z-10 flex justify-center pt-12">
-        <Image
-          src="/icons/fit-ai-logo.svg"
-          alt="Fit.AI"
-          width={85}
-          height={38}
-        />
+        <TreinaiLogo width={85} height={38} />
       </div>
 
       <div className="bg-primary relative z-10 mt-auto flex flex-col items-center rounded-t-[20px] px-5 pt-12 pb-10">

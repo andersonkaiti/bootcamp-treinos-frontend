@@ -1,3 +1,4 @@
+import { TreinaiLogo } from '@components/treinai-logo'
 import Image from 'next/image'
 
 interface PageHeaderProps {
@@ -7,14 +8,7 @@ interface PageHeaderProps {
 export function PageHeader({ title }: PageHeaderProps) {
   return (
     <header className="flex h-16 items-center justify-between px-6">
-      <Image
-        src="/icons/fit-ai-logo.svg"
-        alt="Logo"
-        width={48}
-        height={48}
-        className="invert"
-        priority
-      />
+      <TreinaiLogo width={48} height={48} className="invert" />
 
       {title && (
         <h1 className="font-display text-lg font-semibold text-zinc-900">

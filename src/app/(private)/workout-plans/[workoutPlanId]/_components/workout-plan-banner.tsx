@@ -1,3 +1,4 @@
+import { TreinaiLogo } from '@components/treinai-logo'
 import { getWorkoutPlan } from '@http/api-client-generated'
 import { Goal } from 'lucide-react'
 import Image from 'next/image'
@@ -21,7 +22,7 @@ export async function WorkoutPlanBanner({
       <div className="absolute inset-0 bg-linear-to-r from-black/80 to-transparent" />
 
       <div className="absolute inset-0 flex flex-col justify-between p-5 pb-10">
-        <Image src="/icons/fit-ai-logo.svg" alt="Logo" width={60} height={60} />
+        <TreinaiLogo width={60} height={60} />
 
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-1 self-start rounded-full bg-[#2B54FF] px-2.5 py-1.5">
