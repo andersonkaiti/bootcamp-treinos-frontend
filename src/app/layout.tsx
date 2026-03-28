@@ -1,6 +1,7 @@
 import './globals.css'
 
 import { Toaster } from '@components/ui/sonner'
+import { Analytics } from '@vercel/analytics/react'
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { Inter } from 'next/font/google'
@@ -38,6 +39,8 @@ export default function RootLayout({
             <Toaster richColors />
           </NuqsAdapter>
         </Suspense>
+
+        <Analytics />
       </body>
     </html>
   )
