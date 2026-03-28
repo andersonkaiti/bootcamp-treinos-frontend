@@ -92,7 +92,7 @@ export default function LoginPage() {
           className="mt-[60px] text-center text-xs leading-[140%] text-white/70"
           style={{ fontFamily: 'var(--font-inter-tight)' }}
         >
-          ©2026 Copyright FIT.AI. Todos os direitos reservados
+          ©2026 Copyright Anderson Kaiti. Todos os direitos reservados
         </p>
       </div>
     </main>
