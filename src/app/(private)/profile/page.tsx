@@ -8,6 +8,7 @@ import { BodyStatsGridSkeleton } from './_components/body-stats-grid-skeleton'
 import { ProfileHeaderContent } from './_components/profile-header-content'
 import { ProfileHeaderSkeleton } from './_components/profile-header-skeleton'
 import { SignOutButton } from './_components/sign-out-button'
+import { UserInfoCardContent } from './_components/user-info-card-content'
 
 async function PerfilPage() {
   return (
@@ -21,6 +22,10 @@ async function PerfilPage() {
 
         <Suspense fallback={<BodyStatsGridSkeleton />}>
           <BodyStatsGridContent />
+        </Suspense>
+
+        <Suspense>
+          <UserInfoCardContent />
         </Suspense>
 
         <SignOutButton />
