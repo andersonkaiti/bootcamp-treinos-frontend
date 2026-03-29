@@ -32,6 +32,19 @@ async function WorkoutDayPage({ params }: WorkoutDayPageProps) {
     sessionStatus = 'in_progress'
   }
 
+  const weekDayMap: Record<string, number> = {
+    SUNDAY: 0,
+    MONDAY: 1,
+    TUESDAY: 2,
+    WEDNESDAY: 3,
+    THURSDAY: 4,
+    FRIDAY: 5,
+    SATURDAY: 6,
+  }
+
+  const today = new Date().getDay()
+  const isToday = weekDayMap[workoutDay.weekDay] === today
+
   const handleStartWorkout = startWorkoutAction.bind(null, workoutPlanId, dayId)
   const handleCompleteWorkout = completeWorkoutAction.bind(
     null,
@@ -52,6 +65,7 @@ async function WorkoutDayPage({ params }: WorkoutDayPageProps) {
         <WorkoutActions
           isRest={workoutDay.isRest}
           sessionStatus={sessionStatus}
+          isToday={isToday}
           onStartWorkout={handleStartWorkout}
           onCompleteWorkout={handleCompleteWorkout}
         />

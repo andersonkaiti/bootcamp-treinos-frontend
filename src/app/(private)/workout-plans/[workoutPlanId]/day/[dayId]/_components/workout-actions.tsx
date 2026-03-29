@@ -17,6 +17,7 @@ import { toast } from 'sonner'
 interface WorkoutActionsProps {
   isRest: boolean
   sessionStatus: 'none' | 'in_progress' | 'completed'
+  isToday: boolean
   onStartWorkout: () => Promise<void>
   onCompleteWorkout: () => Promise<void>
 }
@@ -24,6 +25,7 @@ interface WorkoutActionsProps {
 export function WorkoutActions({
   isRest,
   sessionStatus,
+  isToday,
   onStartWorkout,
   onCompleteWorkout,
 }: WorkoutActionsProps) {
@@ -107,6 +109,16 @@ export function WorkoutActions({
           </DialogFooter>
         </DialogContent>
       </Dialog>
+    )
+  }
+
+  if (!isToday) {
+    return (
+      <div className="flex items-center justify-center rounded-xl bg-[#F1F1F1] px-5 py-4">
+        <span className="font-display text-sm font-semibold text-[#656565]">
+          Este treino é para outro dia
+        </span>
+      </div>
     )
   }
 
