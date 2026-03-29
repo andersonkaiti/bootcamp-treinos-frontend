@@ -37,7 +37,7 @@ export function StreakBanner({ workoutStreak }: StreakBannerProps) {
 
       <div className="relative z-10 flex flex-col items-center gap-1">
         <span className="text-center font-[family-name:var(--font-inter-tight),sans-serif] text-[48px] leading-[95%] font-semibold text-white">
-          {workoutStreak} dias
+          {workoutStreak} {workoutStreak === 1 ? 'dia' : 'dias'}
         </span>
         <span className="text-center font-[family-name:var(--font-inter-tight),sans-serif] text-[16px] leading-[115%] font-normal text-white/60">
           Sequência Atual

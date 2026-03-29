@@ -1,6 +1,7 @@
 import { WorkoutDayCard } from '@components/workout-day-card'
 import { getWorkoutPlan } from '@http/api-client-generated'
 import Link from 'next/link'
+import { sortByWeekDay } from '@lib/week-day-utils'
 
 import { RestDayCard } from './rest-day-card'
 
@@ -10,10 +11,11 @@ export async function WorkoutDaysList({
   workoutPlanId: string
 }) {
   const workoutPlan = await getWorkoutPlan(workoutPlanId)
+  const sortedDays = sortByWeekDay(workoutPlan.workoutDays)
 
   return (
     <section className="flex flex-col gap-3 p-5">
-      {workoutPlan.workoutDays.map((day) => {
+      {sortedDays.map((day) => {
         if (day.isRest) {
           return <RestDayCard key={day.id} dayOfWeek={day.weekDay} />
         }

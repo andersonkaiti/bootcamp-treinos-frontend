@@ -24,6 +24,12 @@ export function ConsistencySection({
   workoutStreak,
   todayIndex,
 }: ConsistencySectionProps) {
+  const daysToShow = Math.max(workoutStreak, 7)
+  const daysArray = Array.from({ length: daysToShow }, (_, i) => {
+    const dayOffset = daysToShow - 1 - i
+    return dayjs().subtract(dayOffset, 'day').format('YYYY-MM-DD')
+  })
+
   return (
     <section className="flex flex-col gap-3 px-5 pt-5">
       <div className="flex items-center justify-between">
@@ -37,23 +43,21 @@ export function ConsistencySection({
 
       <div className="flex items-center gap-3">
         <div className="flex h-20.5 flex-1 items-center justify-between rounded-xl border border-gray-200 px-5">
-          {DAY_LABELS.map((label, index) => {
-            const dateKey = dayjs()
-              .isoWeekday(index + 1)
-              .format('YYYY-MM-DD')
+          {daysArray.map((dateKey, index) => {
             const dayData = consistencyByDay[dateKey]
             const status: ConsistencyStatus = dayData?.workoutDayCompleted
               ? 'completed'
               : dayData?.workoutDayStarted
                 ? 'started'
                 : 'not_started'
+            const isToday = dateKey === dayjs().format('YYYY-MM-DD')
 
             return (
               <ConsistencySquare
                 key={dateKey}
                 status={status}
-                dayLabel={label}
-                isToday={index === todayIndex}
+                dayLabel={dayjs(dateKey).format('ddd')[0].toUpperCase()}
+                isToday={isToday}
               />
             )
           })}

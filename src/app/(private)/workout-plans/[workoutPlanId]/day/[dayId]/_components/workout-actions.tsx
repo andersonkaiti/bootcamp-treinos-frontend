@@ -15,12 +15,14 @@ import { useState, useTransition } from 'react'
 import { toast } from 'sonner'
 
 interface WorkoutActionsProps {
+  isRest: boolean
   sessionStatus: 'none' | 'in_progress' | 'completed'
   onStartWorkout: () => Promise<void>
   onCompleteWorkout: () => Promise<void>
 }
 
 export function WorkoutActions({
+  isRest,
   sessionStatus,
   onStartWorkout,
   onCompleteWorkout,
@@ -51,6 +53,16 @@ export function WorkoutActions({
         toast.error('Erro ao concluir treino. Tente novamente.')
       }
     })
+  }
+
+  if (isRest) {
+    return (
+      <div className="flex items-center justify-center rounded-xl bg-[#F1F1F1] px-5 py-4">
+        <span className="font-display text-sm font-semibold text-[#656565]">
+          Dia de descanso
+        </span>
+      </div>
+    )
   }
 
   if (sessionStatus === 'completed') {

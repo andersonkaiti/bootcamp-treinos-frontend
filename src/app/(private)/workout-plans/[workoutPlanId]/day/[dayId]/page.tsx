@@ -50,6 +50,7 @@ async function WorkoutDayPage({ params }: WorkoutDayPageProps) {
         <ExerciseList exercises={workoutDay.exercises} />
 
         <WorkoutActions
+          isRest={workoutDay.isRest}
           sessionStatus={sessionStatus}
           onStartWorkout={handleStartWorkout}
           onCompleteWorkout={handleCompleteWorkout}
