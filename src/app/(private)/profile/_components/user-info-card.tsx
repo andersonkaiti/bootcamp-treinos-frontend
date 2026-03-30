@@ -2,17 +2,22 @@ import type { GetUserTrainData200 } from '@http/api-client-generated'
 import { AlertCircle, Target } from 'lucide-react'
 
 const DAY_TRANSLATION: Record<string, string> = {
-  Monday: 'Segunda',
-  Tuesday: 'Terça',
-  Wednesday: 'Quarta',
-  Thursday: 'Quinta',
-  Friday: 'Sexta',
-  Saturday: 'Sábado',
-  Sunday: 'Domingo',
+  MONDAY: 'segunda-feira',
+  TUESDAY: 'terça-feira',
+  WEDNESDAY: 'quarta-feira',
+  THURSDAY: 'quinta-feira',
+  FRIDAY: 'sexta-feira',
+  SATURDAY: 'sábado',
+  SUNDAY: 'domingo',
 }
 
 function translateDays(days: string[]): string {
   return days.map((day) => DAY_TRANSLATION[day] || day).join(', ')
+}
+
+function capitalize(text: string): string {
+  if (!text) return text
+  return text.charAt(0).toUpperCase() + text.slice(1)
 }
 
 interface UserInfoCardProps {
@@ -40,7 +45,7 @@ export function UserInfoCard({ trainData }: UserInfoCardProps) {
             </span>
           </div>
           <span className="font-[family-name:var(--font-inter-tight),sans-serif] text-[16px] leading-[120%] font-normal text-black">
-            {trainData.goal}
+            {capitalize(trainData?.goal || 'Não informado')}
           </span>
         </div>
       )}
@@ -54,7 +59,8 @@ export function UserInfoCard({ trainData }: UserInfoCardProps) {
             </span>
           </div>
           <span className="font-[family-name:var(--font-inter-tight),sans-serif] text-[16px] leading-[120%] font-normal text-black">
-            {trainData.availableDays && translateDays(trainData.availableDays)}
+            {trainData.availableDays &&
+              capitalize(translateDays(trainData.availableDays))}
           </span>
         </div>
       )}
@@ -68,7 +74,7 @@ export function UserInfoCard({ trainData }: UserInfoCardProps) {
             </span>
           </div>
           <span className="font-[family-name:var(--font-inter-tight),sans-serif] text-[16px] leading-[120%] font-normal text-black">
-            {trainData.physicalLimitations}
+            {capitalize(trainData.physicalLimitations || 'Nenhuma')}
           </span>
         </div>
       )}
