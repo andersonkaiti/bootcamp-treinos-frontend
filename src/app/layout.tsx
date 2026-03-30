@@ -62,7 +62,7 @@ export default function RootLayout({
 
             <Chatbot />
 
-            <Toaster richColors />
+            <Toaster />
 
             <ServiceWorkerRegister />
           </NuqsAdapter>
