@@ -38,7 +38,7 @@ export async function api<T>(config: ApiClientConfig): Promise<T> {
     }).json()
   } catch (error) {
     if (error instanceof HTTPError && error.response.status === 401) {
-      handleUnauthorized()
+      await handleUnauthorized()
     }
 
     throw error
