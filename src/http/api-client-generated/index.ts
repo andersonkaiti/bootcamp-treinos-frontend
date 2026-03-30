@@ -348,6 +348,108 @@ export type GetWorkoutPlan500 = {
   code: string
 }
 
+export type AddWorkoutDayBodyWeekDay =
+  (typeof AddWorkoutDayBodyWeekDay)[keyof typeof AddWorkoutDayBodyWeekDay]
+
+export const AddWorkoutDayBodyWeekDay = {
+  MONDAY: 'MONDAY',
+  TUESDAY: 'TUESDAY',
+  WEDNESDAY: 'WEDNESDAY',
+  THURSDAY: 'THURSDAY',
+  FRIDAY: 'FRIDAY',
+  SATURDAY: 'SATURDAY',
+  SUNDAY: 'SUNDAY',
+} as const
+
+export type AddWorkoutDayBodyExercisesItem = {
+  /** @minLength 1 */
+  name: string
+  /** @minimum 1 */
+  sets: number
+  /** @minimum 1 */
+  reps: number
+  /** @minimum 1 */
+  restTimeInSeconds: number
+  /** @minimum 0 */
+  order: number
+}
+
+export type AddWorkoutDayBody = {
+  /** @minLength 1 */
+  name: string
+  weekDay: AddWorkoutDayBodyWeekDay
+  isRest?: boolean
+  /** @minimum 1 */
+  estimatedDurationInSeconds: number
+  coverImageUrl?: string
+  exercises?: AddWorkoutDayBodyExercisesItem[]
+}
+
+export type AddWorkoutDay201WeekDay =
+  (typeof AddWorkoutDay201WeekDay)[keyof typeof AddWorkoutDay201WeekDay]
+
+export const AddWorkoutDay201WeekDay = {
+  MONDAY: 'MONDAY',
+  TUESDAY: 'TUESDAY',
+  WEDNESDAY: 'WEDNESDAY',
+  THURSDAY: 'THURSDAY',
+  FRIDAY: 'FRIDAY',
+  SATURDAY: 'SATURDAY',
+  SUNDAY: 'SUNDAY',
+} as const
+
+export type AddWorkoutDay201 = {
+  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$ */
+  id: string
+  name: string
+  weekDay: AddWorkoutDay201WeekDay
+  isRest: boolean
+  estimatedDurationInSeconds: number
+  /** @nullable */
+  coverImageUrl?: string | null
+  exercisesCount: number
+}
+
+export type AddWorkoutDay400 = {
+  error: string
+  code: string
+}
+
+export type AddWorkoutDay401 = {
+  error: string
+  code: string
+}
+
+export type AddWorkoutDay404 = {
+  error: string
+  code: string
+}
+
+export type AddWorkoutDay500 = {
+  error: string
+  code: string
+}
+
+export type RemoveWorkoutDay400 = {
+  error: string
+  code: string
+}
+
+export type RemoveWorkoutDay401 = {
+  error: string
+  code: string
+}
+
+export type RemoveWorkoutDay404 = {
+  error: string
+  code: string
+}
+
+export type RemoveWorkoutDay500 = {
+  error: string
+  code: string
+}
+
 export type GetWorkoutDay200WeekDay =
   (typeof GetWorkoutDay200WeekDay)[keyof typeof GetWorkoutDay200WeekDay]
 
@@ -594,8 +696,9 @@ export type GetUserTrainData200 = {
   /**
    * @minimum 0
    * @maximum 100
+   * @nullable
    */
-  bodyFatPercentage: number
+  bodyFatPercentage: number | null
   /** @nullable */
   goal?: string | null
   availableDays?: string[]
@@ -633,8 +736,9 @@ export type PostMeTrainingData200 = {
   /**
    * @minimum 0
    * @maximum 100
+   * @nullable
    */
-  bodyFatPercentage: number
+  bodyFatPercentage: number | null
   /** @nullable */
   goal?: string | null
   availableDays?: string[]
@@ -692,6 +796,31 @@ export const updateWorkoutPlan = (
  */
 export const getWorkoutPlan = (id: string) => {
   return api<GetWorkoutPlan200>({ url: `/workout-plans/${id}`, method: 'GET' })
+}
+
+/**
+ * @summary Add a new day to an existing workout plan
+ */
+export const addWorkoutDay = (
+  planId: string,
+  addWorkoutDayBody: AddWorkoutDayBody
+) => {
+  return api<AddWorkoutDay201>({
+    url: `/workout-plans/${planId}/days`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: addWorkoutDayBody,
+  })
+}
+
+/**
+ * @summary Remove a day from a workout plan
+ */
+export const removeWorkoutDay = (planId: string, dayId: string) => {
+  return api<unknown>({
+    url: `/workout-plans/${planId}/days/${dayId}`,
+    method: 'DELETE',
+  })
 }
 
 /**
@@ -787,6 +916,12 @@ export type UpdateWorkoutPlanResult = NonNullable<
 >
 export type GetWorkoutPlanResult = NonNullable<
   Awaited<ReturnType<typeof getWorkoutPlan>>
+>
+export type AddWorkoutDayResult = NonNullable<
+  Awaited<ReturnType<typeof addWorkoutDay>>
+>
+export type RemoveWorkoutDayResult = NonNullable<
+  Awaited<ReturnType<typeof removeWorkoutDay>>
 >
 export type GetWorkoutDayResult = NonNullable<
   Awaited<ReturnType<typeof getWorkoutDay>>
