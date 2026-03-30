@@ -192,6 +192,105 @@ export type ListWorkoutPlans500 = {
   code: string
 }
 
+export type UpdateWorkoutPlanBodyWorkoutDaysItemWeekDay =
+  (typeof UpdateWorkoutPlanBodyWorkoutDaysItemWeekDay)[keyof typeof UpdateWorkoutPlanBodyWorkoutDaysItemWeekDay]
+
+export const UpdateWorkoutPlanBodyWorkoutDaysItemWeekDay = {
+  MONDAY: 'MONDAY',
+  TUESDAY: 'TUESDAY',
+  WEDNESDAY: 'WEDNESDAY',
+  THURSDAY: 'THURSDAY',
+  FRIDAY: 'FRIDAY',
+  SATURDAY: 'SATURDAY',
+  SUNDAY: 'SUNDAY',
+} as const
+
+export type UpdateWorkoutPlanBodyWorkoutDaysItemExercisesItem = {
+  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$ */
+  id?: string
+  /** @minLength 1 */
+  name?: string
+  /** @minimum 1 */
+  sets?: number
+  /** @minimum 1 */
+  reps?: number
+  /** @minimum 1 */
+  restTimeInSeconds?: number
+  /** @minimum 0 */
+  order?: number
+}
+
+export type UpdateWorkoutPlanBodyWorkoutDaysItem = {
+  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$ */
+  id?: string
+  /** @minLength 1 */
+  name?: string
+  weekDay?: UpdateWorkoutPlanBodyWorkoutDaysItemWeekDay
+  isRest?: boolean
+  /** @minimum 1 */
+  estimatedDurationInSeconds?: number
+  coverImageUrl?: string
+  exercises?: UpdateWorkoutPlanBodyWorkoutDaysItemExercisesItem[]
+}
+
+export type UpdateWorkoutPlanBody = {
+  /** @minLength 1 */
+  name?: string
+  workoutDays?: UpdateWorkoutPlanBodyWorkoutDaysItem[]
+}
+
+export type UpdateWorkoutPlan200WorkoutDaysItemWeekDay =
+  (typeof UpdateWorkoutPlan200WorkoutDaysItemWeekDay)[keyof typeof UpdateWorkoutPlan200WorkoutDaysItemWeekDay]
+
+export const UpdateWorkoutPlan200WorkoutDaysItemWeekDay = {
+  MONDAY: 'MONDAY',
+  TUESDAY: 'TUESDAY',
+  WEDNESDAY: 'WEDNESDAY',
+  THURSDAY: 'THURSDAY',
+  FRIDAY: 'FRIDAY',
+  SATURDAY: 'SATURDAY',
+  SUNDAY: 'SUNDAY',
+} as const
+
+export type UpdateWorkoutPlan200WorkoutDaysItem = {
+  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$ */
+  id: string
+  name: string
+  weekDay: UpdateWorkoutPlan200WorkoutDaysItemWeekDay
+  isRest: boolean
+  estimatedDurationInSeconds: number
+  /** @nullable */
+  coverImageUrl?: string | null
+  exercisesCount: number
+}
+
+export type UpdateWorkoutPlan200 = {
+  /** @pattern ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$ */
+  id: string
+  name: string
+  workoutDays: UpdateWorkoutPlan200WorkoutDaysItem[]
+}
+
+export type UpdateWorkoutPlan400 = {
+  error: string
+  code: string
+}
+
+export type UpdateWorkoutPlan401 = {
+  error: string
+  code: string
+}
+
+export type UpdateWorkoutPlan404 = {
+  error: string
+  code: string
+}
+
+export type UpdateWorkoutPlan500 = {
+  error: string
+  code: string
+}
+
 export type GetWorkoutPlan200WorkoutDaysItemWeekDay =
   (typeof GetWorkoutPlan200WorkoutDaysItemWeekDay)[keyof typeof GetWorkoutPlan200WorkoutDaysItemWeekDay]
 
@@ -497,6 +596,11 @@ export type GetUserTrainData200 = {
    * @maximum 100
    */
   bodyFatPercentage: number
+  /** @nullable */
+  goal?: string | null
+  availableDays?: string[]
+  /** @nullable */
+  physicalLimitations?: string | null
 } | null
 
 export type GetUserTrainData401 = {
@@ -506,16 +610,19 @@ export type GetUserTrainData401 = {
 
 export type PostMeTrainingDataBody = {
   /** @minimum 1 */
-  weightInGrams: number
+  weightInGrams?: number
   /** @minimum 1 */
-  heightInCentimeters: number
+  heightInCentimeters?: number
   /** @minimum 1 */
-  age: number
+  age?: number
   /**
    * @minimum 0
    * @maximum 100
    */
-  bodyFatPercentage: number
+  bodyFatPercentage?: number
+  goal?: string
+  availableDays?: string[]
+  physicalLimitations?: string
 }
 
 export type PostMeTrainingData200 = {
@@ -528,6 +635,11 @@ export type PostMeTrainingData200 = {
    * @maximum 100
    */
   bodyFatPercentage: number
+  /** @nullable */
+  goal?: string | null
+  availableDays?: string[]
+  /** @nullable */
+  physicalLimitations?: string | null
 }
 
 export type PostMeTrainingData401 = {
@@ -557,6 +669,21 @@ export const listWorkoutPlans = (params?: ListWorkoutPlansParams) => {
     url: `/workout-plans`,
     method: 'GET',
     params,
+  })
+}
+
+/**
+ * @summary Update an existing workout plan (partial updates)
+ */
+export const updateWorkoutPlan = (
+  id: string,
+  updateWorkoutPlanBody: UpdateWorkoutPlanBody
+) => {
+  return api<UpdateWorkoutPlan200>({
+    url: `/workout-plans/${id}`,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    data: updateWorkoutPlanBody,
   })
 }
 
@@ -654,6 +781,9 @@ export type CreateWorkoutPlanResult = NonNullable<
 >
 export type ListWorkoutPlansResult = NonNullable<
   Awaited<ReturnType<typeof listWorkoutPlans>>
+>
+export type UpdateWorkoutPlanResult = NonNullable<
+  Awaited<ReturnType<typeof updateWorkoutPlan>>
 >
 export type GetWorkoutPlanResult = NonNullable<
   Awaited<ReturnType<typeof getWorkoutPlan>>

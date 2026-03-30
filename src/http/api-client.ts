@@ -1,5 +1,6 @@
 import { env } from '@config/env'
 import { getSessionToken } from '@lib/get-session-token'
+import { handleUnauthorized } from '@lib/handle-unauthorized'
 import ky, { HTTPError } from 'ky'
 
 const client = ky.create({
@@ -37,12 +38,7 @@ export async function api<T>(config: ApiClientConfig): Promise<T> {
     }).json()
   } catch (error) {
     if (error instanceof HTTPError && error.response.status === 401) {
-      if (typeof window === 'undefined') {
-        const { redirect } = await import('next/navigation')
-        redirect('/login')
-      } else {
-        window.location.replace('/login')
-      }
+      handleUnauthorized()
     }
 
     throw error
