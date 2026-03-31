@@ -1,14 +1,11 @@
+'use client'
+
 import dayjs from 'dayjs'
-import isoWeek from 'dayjs/plugin/isoWeek'
 import { Flame } from 'lucide-react'
 
 import { ConsistencySquare } from './consistency-square'
 
-dayjs.extend(isoWeek)
-
 export type ConsistencyStatus = 'completed' | 'started' | 'not_started'
-
-const DAY_LABELS = ['S', 'T', 'Q', 'Q', 'S', 'S', 'D']
 
 interface ConsistencySectionProps {
   consistencyByDay: Record<
@@ -16,13 +13,11 @@ interface ConsistencySectionProps {
     { workoutDayCompleted?: boolean; workoutDayStarted?: boolean }
   >
   workoutStreak: number
-  todayIndex: number
 }
 
 export function ConsistencySection({
   consistencyByDay,
   workoutStreak,
-  todayIndex,
 }: ConsistencySectionProps) {
   const daysToShow = Math.max(workoutStreak, 7)
   const daysArray = Array.from({ length: daysToShow }, (_, i) => {
@@ -43,7 +38,7 @@ export function ConsistencySection({
 
       <div className="flex items-center gap-3">
         <div className="flex h-20.5 flex-1 items-center justify-between rounded-xl border border-gray-200 px-5">
-          {daysArray.map((dateKey, index) => {
+          {daysArray.map((dateKey) => {
             const dayData = consistencyByDay[dateKey]
             const status: ConsistencyStatus = dayData?.workoutDayCompleted
               ? 'completed'

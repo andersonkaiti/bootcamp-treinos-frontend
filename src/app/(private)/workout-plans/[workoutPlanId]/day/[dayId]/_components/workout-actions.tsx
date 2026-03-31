@@ -14,10 +14,20 @@ import {
 import { useState, useTransition } from 'react'
 import { toast } from 'sonner'
 
+const weekDayMap: Record<string, number> = {
+  SUNDAY: 0,
+  MONDAY: 1,
+  TUESDAY: 2,
+  WEDNESDAY: 3,
+  THURSDAY: 4,
+  FRIDAY: 5,
+  SATURDAY: 6,
+}
+
 interface WorkoutActionsProps {
   isRest: boolean
   sessionStatus: 'none' | 'in_progress' | 'completed'
-  isToday: boolean
+  weekDay: string
   onStartWorkout: () => Promise<void>
   onCompleteWorkout: () => Promise<void>
 }
@@ -25,10 +35,11 @@ interface WorkoutActionsProps {
 export function WorkoutActions({
   isRest,
   sessionStatus,
-  isToday,
+  weekDay,
   onStartWorkout,
   onCompleteWorkout,
 }: WorkoutActionsProps) {
+  const isToday = weekDayMap[weekDay] === new Date().getDay()
   const [isPending, startTransition] = useTransition()
   const [openStartDialog, setOpenStartDialog] = useState(false)
   const [openCompleteDialog, setOpenCompleteDialog] = useState(false)

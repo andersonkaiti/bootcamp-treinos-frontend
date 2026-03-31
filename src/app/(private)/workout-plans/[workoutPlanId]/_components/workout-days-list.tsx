@@ -1,7 +1,7 @@
 import { WorkoutDayCard } from '@components/workout-day-card'
 import { getWorkoutPlan } from '@http/api-client-generated'
-import Link from 'next/link'
 import { sortByWeekDay } from '@lib/week-day-utils'
+import Link from 'next/link'
 
 import { RestDayCard } from './rest-day-card'
 

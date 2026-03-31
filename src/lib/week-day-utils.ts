@@ -8,9 +8,7 @@ const WEEK_DAY_ORDER: Record<string, number> = {
   SUNDAY: 6,
 }
 
-export function sortByWeekDay<T extends { weekDay: string }>(
-  items: T[]
-): T[] {
+export function sortByWeekDay<T extends { weekDay: string }>(items: T[]): T[] {
   return [...items].sort((a, b) => {
     const orderA = WEEK_DAY_ORDER[a.weekDay] ?? 999
     const orderB = WEEK_DAY_ORDER[b.weekDay] ?? 999
