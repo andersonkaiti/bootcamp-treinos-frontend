@@ -1,9 +1,13 @@
 'use client'
 
+import 'dayjs/locale/pt-br'
+
 import dayjs from 'dayjs'
 import { Flame } from 'lucide-react'
 
 import { ConsistencySquare } from './consistency-square'
+
+dayjs.locale('pt-br')
 
 export type ConsistencyStatus = 'completed' | 'started' | 'not_started'
 
