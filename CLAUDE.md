@@ -77,7 +77,7 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/) combined wit
 
 ### Format
 
-```
+```txt
 <emoji> <type>(<scope>): <description>
 ```
 

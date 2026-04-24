@@ -45,7 +45,7 @@ export default function LoginPage() {
         src="/images/login-bg.png"
         alt="Login Background"
         fill
-        className="object-contain"
+        className="object-cover"
       />
 
       <div className="relative z-10 flex justify-center pt-12">
@@ -56,7 +56,7 @@ export default function LoginPage() {
         <div className="flex flex-col items-center gap-6">
           <div className="flex flex-col items-center gap-3">
             <h1
-              className="text-center text-[32px] leading-[105%] font-semibold text-white"
+              className="text-center text-2xl leading-[110%] font-semibold text-white md:text-[32px] md:leading-[105%]"
               style={{ fontFamily: 'var(--font-inter-tight)' }}
             >
               O app que vai transformar a forma como você treina.
@@ -69,7 +69,7 @@ export default function LoginPage() {
             className="flex h-[38px] cursor-pointer items-center justify-center gap-2 rounded-full bg-white px-6 py-3 transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isPendingTransition ? (
-              <Loader2 className="h-5 w-5 animate-spin text-black" />
+              <Loader2 className="size-5 animate-spin text-black" />
             ) : (
               <Image
                 src="/icons/google-icon.svg"
